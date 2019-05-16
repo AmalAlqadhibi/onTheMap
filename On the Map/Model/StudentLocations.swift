@@ -7,15 +7,19 @@
 //
 
 import Foundation
-struct StudentLocations:Codable {
-    let createdAt:String
-    let firstName:String
-    let lastName :String
-    let latitude:Double
-    let namelongitude:Double
-    let mapString:String
-    let mediaURL:String
-    let objectId:String
-    let uniqueKey:String
-    let updatedAt:String
+struct StudentsLocations:Codable {
+    let createdAt:String?
+    let firstName:String?
+    let lastName :String?
+    let latitude:Double?
+    let longitude:Double?
+    let mapString:String?
+    let mediaURL:String?
+    let objectId:String?
+    let uniqueKey:String?
+    let updatedAt:String?
+}
+class Global {
+    static var studentsLocations = [StudentsLocations]()
+    static var uniqueKey : String!
 }

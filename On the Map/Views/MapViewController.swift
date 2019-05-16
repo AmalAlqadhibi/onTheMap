@@ -10,12 +10,12 @@ import UIKit
 import MapKit
 class MapViewController: UIViewController {
     @IBOutlet weak var map: MKMapView!
-        @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     override func viewDidLoad() {
         activityIndicator.startAnimating()
         super.viewDidLoad()
         map.delegate = self
-                APICalls.getStudentLocations(completion: handleGetStudentLocationResponse(succes:studentLocations:error:))
+        APICalls.getStudentLocations(completion: handleGetStudentLocationResponse(succes:studentLocations:error:))
         // Do any additional setup after loading the view.
     }
     //MARK:- Navigation bar Actions
@@ -34,7 +34,20 @@ class MapViewController: UIViewController {
             present(alert, animated: true, completion: nil)
             
         }
-        
+    }
+    @IBAction func logout(_ sender: UIBarButtonItem) {
+        APICalls.deleteSession { (error) in
+            if let error = error {
+                let alertController = UIAlertController(title: "Oops!", message: error.localizedDescription, preferredStyle: .alert)
+                let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                alertController.addAction(defaultAction)
+                self.present(alertController, animated: true, completion: nil)
+                return
+            }
+            DispatchQueue.main.async {
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
     }
     
     //MARK:- Response handler

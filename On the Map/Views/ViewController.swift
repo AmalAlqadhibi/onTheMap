@@ -31,6 +31,11 @@ class ViewController: UIViewController {
             APICalls.login(username: userName.text!, password: password.text!, completion: handleloginResponse(succes:sessionID:error:))
         }
     }
+    
+    @IBAction func signUpButton(_ sender: Any) {
+       let url = URL(string: "https://auth.udacity.com/sign-up?next=https://classroom.udacity.com/authenticated")!
+        UIApplication.shared.open( url , options: [:], completionHandler: nil)
+    }
     //MARK:- Response handler
     func handleloginResponse(succes:Bool,sessionID: String,error: Error?){
         updateUI(isProcess: false)

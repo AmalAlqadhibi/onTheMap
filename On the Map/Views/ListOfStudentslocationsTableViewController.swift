@@ -13,15 +13,10 @@ class ListOfStudentslocationsTableViewController: UITableViewController {
     var studentsLocations: [StudentsLocations]! {
         return Global.studentsLocations
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
     override func viewWillAppear(_ animated: Bool) {
         if studentsLocations == nil {
             APICalls.getStudentLocations(completion: handleGetStudentLocationResponse(succes:studentLocations:error:))
         }
-        
     }
     
     @IBAction func refreshMapAnnotation(_ sender: Any) {
@@ -39,7 +34,20 @@ class ListOfStudentslocationsTableViewController: UITableViewController {
             present(alert, animated: true, completion: nil)
             
         }
-        
+    }
+    @IBAction func logout(_ sender: UIBarButtonItem) {
+        APICalls.deleteSession { (error) in
+            if let error = error {
+                let alertController = UIAlertController(title: "Oops!", message: error.localizedDescription, preferredStyle: .alert)
+                let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                alertController.addAction(defaultAction)
+                self.present(alertController, animated: true, completion: nil)
+                return
+            }
+            DispatchQueue.main.async {
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
     }
     //MARK:- Response handler
     func handleGetStudentLocationResponse(succes:Bool,studentLocations:[StudentsLocations]? ,error: Error?) {

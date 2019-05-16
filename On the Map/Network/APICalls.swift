@@ -73,7 +73,7 @@ class APICalls{
             
             }.resume()
     }
-    func deleteSession(completion: @escaping (Error?) -> ()) {
+    class func deleteSession(completion: @escaping (Error?) -> ()) {
         var request = URLRequest(url: URL(string: "https://onthemap-api.udacity.com/v1/session")!)
         request.httpMethod = "DELETE"
         var xsrfCookie: HTTPCookie? = nil

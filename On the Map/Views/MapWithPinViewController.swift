@@ -11,7 +11,7 @@ import MapKit
 import CoreLocation
 class MapWithPinViewController: UIViewController ,MKMapViewDelegate {
     @IBOutlet weak var map: MKMapView!
-      @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     var latitude:Double!
     var longitude:Double!
     var url:String!

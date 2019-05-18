@@ -12,8 +12,8 @@ class MapViewController: UIViewController {
     @IBOutlet weak var map: MKMapView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     override func viewDidLoad() {
-        activityIndicator.startAnimating()
         super.viewDidLoad()
+        activityIndicator.startAnimating()
         map.delegate = self
         APICalls.getStudentLocations(completion: handleGetStudentLocationResponse(succes:studentLocations:error:))
         // Do any additional setup after loading the view.
@@ -22,6 +22,7 @@ class MapViewController: UIViewController {
     @IBAction func refreshMapAnnotation(_ sender: Any) {
         APICalls.getStudentLocations(completion: handleGetStudentLocationResponse(succes:studentLocations:error:))
     }
+    
     @IBAction func postAnnotation(_ sender: Any) {
         if UserDefaults.standard.value(forKey: "Userlocation") == nil {
             performSegue(withIdentifier: "ShowAddLocations", sender: self)
@@ -35,6 +36,7 @@ class MapViewController: UIViewController {
             
         }
     }
+    
     @IBAction func logout(_ sender: UIBarButtonItem) {
         APICalls.deleteSession { (error) in
             if let error = error {
@@ -67,7 +69,7 @@ class MapViewController: UIViewController {
                     let coords = CLLocationCoordinate2D (latitude: latitude ?? 0.0, longitude: longitude ?? 0.0)
                     let annotation = MKPointAnnotation()
                     annotation.coordinate = coords
-                    annotation.title = (studentLocation.firstName ?? "First name") + (studentLocation.lastName ?? " Last name")
+                    annotation.title = (studentLocation.firstName ?? "First name ") + (studentLocation.lastName ?? " Last name")
                     annotation.subtitle = studentLocation.mediaURL
                     annotations.append (annotation)
                 }
@@ -97,6 +99,7 @@ extension MapViewController: MKMapViewDelegate {
         }
         return view
     }
+    
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl){
         if control == view.rightCalloutAccessoryView {
             guard let url = URL(string:(view.annotation?.subtitle)! ?? "") else {

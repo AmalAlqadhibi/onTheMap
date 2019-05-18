@@ -13,15 +13,22 @@ class ListOfStudentslocationsTableViewController: UITableViewController {
     var studentsLocations: [StudentsLocations]! {
         return Global.studentsLocations
     }
+    
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         if studentsLocations == nil {
             APICalls.getStudentLocations(completion: handleGetStudentLocationResponse(succes:studentLocations:error:))
         }
     }
     
     @IBAction func refreshMapAnnotation(_ sender: Any) {
-        APICalls.getStudentLocations(completion: handleGetStudentLocationResponse(succes:studentLocations:error:))
+        DispatchQueue.main.async {
+      
+            APICalls.getStudentLocations(completion: self.handleGetStudentLocationResponse(succes:studentLocations:error:))
+            
+        }
     }
+    
     @IBAction func postAnnotation(_ sender: Any) {
         if UserDefaults.standard.value(forKey: "Userlocation") == nil {
             performSegue(withIdentifier: "ShowAddLocations", sender: self)
@@ -35,6 +42,7 @@ class ListOfStudentslocationsTableViewController: UITableViewController {
             
         }
     }
+    
     @IBAction func logout(_ sender: UIBarButtonItem) {
         APICalls.deleteSession { (error) in
             if let error = error {
@@ -66,11 +74,6 @@ class ListOfStudentslocationsTableViewController: UITableViewController {
     
     // MARK: - Table view data source
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
-    }
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return studentsLocations.count
@@ -83,6 +86,7 @@ class ListOfStudentslocationsTableViewController: UITableViewController {
         cell.studentURL.textColor = .gray
         return cell
     }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let url = URL(string:(studentsLocations[indexPath.row].mediaURL)!) else {
             let alert = UIAlertController(title: "Error", message: "Invalid URL", preferredStyle: .alert)

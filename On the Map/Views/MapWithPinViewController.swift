@@ -55,5 +55,4 @@ class MapWithPinViewController: UIViewController ,MKMapViewDelegate {
         let region = MKCoordinateRegion(center: coords, span: MKCoordinateSpan(latitudeDelta: 0.0, longitudeDelta: 0.0))
         map.setRegion(region, animated: true)
     }
-    
 }

@@ -15,6 +15,7 @@ class AddLocationsViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     var latitude:Double?
     var longitude:Double?
+    
     @IBAction func findLocation(_ sender: Any) {
         if location.text == "" || url.text == "" {
             let alertController = UIAlertController(title: "Oops!", message: "Please Enter your location and URL ", preferredStyle: .alert)
@@ -40,9 +41,11 @@ class AddLocationsViewController: UIViewController {
             }
         }
     }
+    
     @IBAction func cancel(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let controller = segue.destination as! MapWithPinViewController
         controller.latitude = self.latitude

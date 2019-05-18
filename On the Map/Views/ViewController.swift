@@ -13,10 +13,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var password: UITextField!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var loginButton: UIButton!
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.    
-    }
     
     @IBAction func loginButton(_ sender: Any) {
         updateUI(isProcess: true)
@@ -85,6 +81,5 @@ class ViewController: UIViewController {
             self.loginButton.isEnabled = !isProcess
         }
     }
-    
 }
 
